@@ -123,11 +123,9 @@ def get_matched_files(regex_pattern):
     def search_in_folder(folder_items, current_path=""):
         for item in folder_items:
             if item['type'] == 'file' and 'title' in item and re.search(regex_pattern, item['title']):
-                # Erstelle den vollständigen Pfad basierend auf dem Ordnerpfad oder nutze Standardordner
                 location = item.get('location', f"{current_path}/{item['name']}" if current_path else f"custom-documents/{item['name']}")
                 matched_files.append({'title': item['title'], 'location': location})
             elif item['type'] == 'folder':
-                # Rekursiv in Unterordner gehen, wobei der aktuelle Pfad erweitert wird
                 search_in_folder(item['items'], f"{current_path}/{item['name']}" if current_path else item['name'])
 
     search_in_folder(all_documents)
